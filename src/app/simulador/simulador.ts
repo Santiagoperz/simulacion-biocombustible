@@ -13,15 +13,15 @@ Chart.register(...registerables);
   styleUrls: ['./simulador.css'],
 })
 export class SimuladorComponent implements AfterViewInit {
-  VT = 1000;   // mL de aceite (Triglicéridos)
-  VM = 200;    // mL de metanol
-  k_app = 0.1; // constante de velocidad aparente (1/h)
+  VT = 1000; 
+  VM = 200;    
+  k_app = 0.1; 
   tiempoTotal = 24;
   dt = 0.5;
 
   grafica: Chart | null = null;
-  ecuacionSeleccionada: 'T' | 'E' | 'G' = 'T'; // pestaña activa
-  mostrarDesarrollo = false; // 👈 nuevo estado para mostrar/ocultar ecuación
+  ecuacionSeleccionada: 'T' | 'E' | 'G' = 'T'; 
+  mostrarDesarrollo = false; 
 
   ngAfterViewInit() {
     this.generarGrafica();
@@ -33,12 +33,12 @@ export class SimuladorComponent implements AfterViewInit {
     const ester: number[] = [];
     const glicerina: number[] = [];
 
-    const T0 = this.VT / 1000; // convertir mL a L
+    const T0 = this.VT / 1000; 
 
     for (let t = 0; t <= this.tiempoTotal; t += this.dt) {
-      const T = T0 * Math.exp(-this.k_app * t); // Aceite
-      const E = 3 * T0 * (1 - Math.exp(-this.k_app * t)); // Biodiésel
-      const G = T0 * (1 - Math.exp(-this.k_app * t)); // Glicerina
+      const T = T0 * Math.exp(-this.k_app * t); 
+      const E = 3 * T0 * (1 - Math.exp(-this.k_app * t)); 
+      const G = T0 * (1 - Math.exp(-this.k_app * t)); 
 
       tiempos.push(t);
       aceite.push(T * 1000);
