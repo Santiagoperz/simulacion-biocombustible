@@ -1,0 +1,107 @@
+<div class="sim-container">
+  <h1>Simulación del Modelo de Mezclas - Biodiésel</h1>
+
+  <div class="inputs">
+    <label>Volumen inicial de Aceite [T]₀ (mL):</label>
+    <input type="number" [(ngModel)]="VT" (ngModelChange)="generarGrafica()" step="50">
+
+    <label>Volumen de Metanol (mL)/Constante kₐₚₚ (1/h):</label>
+    <input type="number" [(ngModel)]="k_app" (ngModelChange)="generarGrafica()" step="0.01">
+
+    <label>Tiempo total (h):</label>
+    <input type="number" [(ngModel)]="tiempoTotal" (ngModelChange)="generarGrafica()" step="1">
+  </div>
+
+  <!-- Gráfica principal -->
+  <canvas id="graficaComponentes"></canvas>
+
+  <!-- Navbar de ecuaciones -->
+  <nav class="mini-navbar">
+    <button [class.active]="ecuacionSeleccionada === 'T'" (click)="seleccionarEcuacion('T')">Triglicéridos</button>
+    <button [class.active]="ecuacionSeleccionada === 'E'" (click)="seleccionarEcuacion('E')">Biodiésel</button>
+    <button [class.active]="ecuacionSeleccionada === 'G'" (click)="seleccionarEcuacion('G')">Glicerina</button>
+  </nav>
+
+  <!-- ECUACIÓN DEL ACEITE -->
+  <div class="ecuacion-section" *ngIf="ecuacionSeleccionada === 'T'">
+    <div class="ecuacion-header" (click)="toggleDesarrollo('T')">
+      <h3>Ecuación del Aceite (Triglicéridos)</h3>
+      <span class="arrow">{{ mostrarT ? '▲' : '▼' }}</span>
+    </div>
+
+    <div class="ecuacion-contenido" *ngIf="mostrarT">
+      <p>Teniendo la ecuación diferencial general tal que:</p>
+      <pre>d[T]/dt = kₐₚₚ . [T](t) </pre>
+      <p>Con Una Condicion Inicial</p>
+      <pre>[T]₀</pre>
+      <p>La solución analítica de esta ecuación diferencial es de orden separable:</p>
+      <pre>d[T]/[T](t) = -kₐₚₚ · dt</pre>
+      <p>Integramos ambos lados:</p>
+      <pre>∫ d[T]/[T](t) = -kₐₚₚ ∫ dt</pre>
+      <p>Obtenemos:</p>
+      <pre>ln|[T](t)| = -kₐₚₚ·t + C</pre>
+      <p>Aplicamos la condición inicial = [T]₀:</p>
+      <pre>ln|[T]₀| = C</pre>
+      <p>Reemplazamos en la ecuación general:</p>
+      <pre>ln|[T](t)| = -kₐₚₚ·t + ln|[T]₀|</pre>
+      <p>Despejamos [T](t):</p>
+      <pre>
+      e<sup>(ln|[T](t)|)</sup> = e<sup>(-kₐₚₚ·t + ln|[T]₀|)</sup>
+      [T](t) = [T]₀ · e<sup>-kₐₚₚ·t</sup>
+      </pre>
+      <p><strong>Solución final:</strong></p>
+    </div>
+    <pre>[T](t) = [T]₀ · e<sup>(-kₐₚₚ·t)</sup></pre>
+    <p>La concentración de aceite disminuye exponencialmente con el tiempo:</p>
+    <p>Representa el consumo del aceite durante la reacción de transesterificación.</p>
+  </div>
+
+
+  <!-- ECUACIÓN DEL BIODIÉSEL -->
+  <div class="ecuacion-section" *ngIf="ecuacionSeleccionada === 'E'">
+    <div class="ecuacion-header" (click)="toggleDesarrollo('E')">
+      <h3>Ecuación del Biodiésel (Éster Metílico)</h3>
+      <span class="arrow">{{ mostrarE ? '▲' : '▼' }}</span>
+    </div>
+
+    <div class="ecuacion-contenido" *ngIf="mostrarE">
+      <p>
+        La reacción de transesterificación sigue la estequiometría 3:1 respecto al aceite.
+        El aumento de biodiésel se asocia al consumo del triglicérido:
+      </p>
+      <pre>[E](t) = 3([T]₀ - [T](t))</pre>
+
+      <p>Sustituimos la solución de [T](t) obtenida anteriormente:</p>
+      <pre>[E](t) = 3([T]₀ - [T]₀ · e<sup>(-kₐₚₚ·t)</sup>)</pre>
+
+      <p>Factorizamos [T]₀:</p>
+      <pre>[E](t) = 3[T]₀ (1 - e<sup>(-kₐₚₚ·t)</sup>)</pre>
+
+      <p><strong>Solución final:</strong></p>
+    </div>
+    <pre>[E](t) = 3·[T]₀ · (1 - e<sup>(-kₐₚₚ·t)</sup>)</pre>
+    <p>El biodiésel aumenta con el tiempo hasta alcanzar un valor máximo proporcional al aceite inicial.</p>
+  </div>
+
+  <!-- ECUACIÓN DE LA GLICERINA -->
+  <div class="ecuacion-section" *ngIf="ecuacionSeleccionada === 'G'">
+    <div class="ecuacion-header" (click)="toggleDesarrollo('G')">
+      <h3>Ecuación de la Glicerina</h3>
+      <span class="arrow">{{ mostrarG ? '▲' : '▼' }}</span>
+    </div>
+
+    <div class="ecuacion-contenido" *ngIf="mostrarG">
+      <p> La formación de glicerina es directamente proporcional a la cantidad de aceite consumido: </p>
+      <pre>[G](t) = [T]₀ - [T](t)</pre>
+
+      <p>Sustituimos la expresión analítica de [T](t):</p>
+      <pre>[G](t) = [T]₀ - [T]₀·e<sup>(-kₐₚₚ·t)</sup></pre>
+
+      <p>Factorizamos [T]₀:</p>
+      <pre>[G](t) = [T]₀(1 - e<sup>(-kₐₚₚ·t)</sup>)</pre>
+
+      <p><strong>Solución final:</strong></p>
+    </div>
+    <pre>[G](t) = [T]₀ · (1 - e<sup>(-kₐₚₚ·t)</sup>)</pre>
+    <p>La glicerina crece de forma exponencial con el avance de la reacción, reflejando la conversión del aceite.</p>
+  </div>

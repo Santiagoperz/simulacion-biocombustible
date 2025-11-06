@@ -1,0 +1,133 @@
+.sim-container {
+  max-width: 90%;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #1e1e2f;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+label {
+  flex: 1 0 200px;
+}
+
+input {
+  flex: 1 0 120px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3e8e41;
+}
+
+/* Navbar */
+.mini-navbar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.mini-navbar button {
+  background: #2e2e4f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.mini-navbar button.active {
+  background: #4caf50;
+}
+
+/* Ecuaciones */
+.ecuacion-section {
+  margin: 1rem auto;
+  padding: 1rem;
+  background: #292942;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.ecuacion-section pre {
+  background: #121226;
+  color: #ffb347;
+  padding: 0.5rem;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+canvas {
+  margin-top: 2rem;
+  width: 100%;
+  height: 400px;
+}
+
+pre {
+  background: #121226;
+  color: #ffb347;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-family: 'Consolas', monospace;
+  white-space: pre-wrap;
+  line-height: 1.4em;
+}
+
+.ecuacion-header {
+  display: flex;
+  justify-content: center; /* centramos */
+  align-items: center;
+  background: #202040;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  position: relative; /* necesario para posicionar la flecha */
+}
+
+.ecuacion-header .arrow {
+  position: absolute;
+  right: 1rem; /* lo colocamos a la derecha sin afectar el centrado del texto */
+  font-size: 1.2rem;
+  color: #ffb347;
+}
+
+
+.arrow {
+  font-size: 1.2rem;
+  color: #ffb347;
+}
+
+.ecuacion-contenido {
+  margin-top: 0.8rem;
+  text-align: center;
+  animation: fadeIn 0.25s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
