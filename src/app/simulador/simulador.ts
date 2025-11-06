@@ -103,7 +103,7 @@ export class SimuladorComponent implements AfterViewInit {
 
   seleccionarEcuacion(tipo: 'T' | 'E' | 'G') {
     this.ecuacionSeleccionada = tipo;
-    this.mostrarDesarrollo = false; // 👈 se oculta al cambiar ecuación
+    this.mostrarDesarrollo = false; 
   }
 
   
